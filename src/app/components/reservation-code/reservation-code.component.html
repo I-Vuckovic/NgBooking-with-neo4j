@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <p>You have sucessfully made a reservation </p>
+  <p>The ID of your reservation is: {{data}}</p>
+</div>
+<div mat-dialog-actions>
+  <a routerLink="/trip-list" routerLinkActive="active">
+    <button mat-button (click)="onClick()">Ok</button>
+  </a>
+</div>

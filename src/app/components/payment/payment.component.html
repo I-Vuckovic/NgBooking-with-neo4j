@@ -1,0 +1,122 @@
+<div class="container" style="margin-top: 20px;" *ngIf="trip !== null">
+  <div class="trip-info" >
+    <div>
+      {{ trip.from }}
+    </div>
+    <div>
+      {{ trip.to }}
+    </div>
+    <div>
+      {{ trip.time | date: "medium" }}
+    </div>
+    <div>{{ trip.distance }}km</div>
+    <div>{{ trip.duration }}</div>
+    <div>
+      {{ trip.price }}
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        style="font-size: 20px;"
+        >euro_symbol</mat-icon
+      >
+    </div>
+  </div>
+
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <div class="container">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>User information</ng-template>
+          <mat-form-field class="addMargin">
+            <input
+              [(ngModel)]="reservation.firstName"
+              formControlName="firstName"
+              matInput
+              placeholder="First name"
+              required
+              class="browser-default"
+              type="text"
+            />
+          </mat-form-field>
+          <mat-form-field class="addMargin">
+            <input
+              [(ngModel)]="reservation.lastName"
+              formControlName="lastName"
+              matInput
+              placeholder="Last name"
+              required
+              class="browser-default"
+              type="text"
+            />
+          </mat-form-field>
+          <mat-form-field class="addMargin">
+            <input
+              [(ngModel)]="reservation.phoneNumber"
+              formControlName="phoneNumber"
+              matInput
+              placeholder="Phone number"
+              required
+              class="browser-default"
+              type="text"
+            />
+          </mat-form-field>
+          <mat-form-field class="addMargin">
+            <input
+              [(ngModel)]="reservation.email"
+              formControlName="email"
+              matInput
+              placeholder="email"
+              required
+              class="browser-default"
+              type="text"
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <div class="container extra-payment">
+        <ng-template matStepLabel>Extra payment</ng-template>
+        <mat-checkbox [(ngModel)]="extraLuggage"
+          >Extra luggage + {{ trip.extraLuggage }}</mat-checkbox
+        >
+        <mat-checkbox>Some other expense (not implemented yet)</mat-checkbox>
+        <mat-checkbox [(ngModel)]="carbonFootprint"
+          >Carbon footprint + 0.5</mat-checkbox
+        >
+
+        <h3>
+          Current price:
+          {{
+            trip.price +
+              (extraLuggage ? trip.extraLuggage : 0) +
+              (carbonFootprint ? 0.5 : 0) | number
+          }}
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >euro_symbol</mat-icon
+          >
+        </h3>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div class="container">
+        <ng-template matStepLabel>Done</ng-template>
+        <button mat-raised-button (click)="makeReservation()">Make reservation</button>
+        <mat-spinner *ngIf="processing"></mat-spinner>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

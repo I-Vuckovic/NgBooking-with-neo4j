@@ -1,0 +1,24 @@
+<mat-toolbar class="app-toolbar" color="primary">
+  <div class="container ">
+    <a routerLink="/home" routerLinkActive="active" class="white-text">
+      NgBooking
+    </a>
+    <a routerLink="/reservation-search" routerLinkActive="active" class="white-text right" style='margin-left: 20px;'>
+      View reservation
+    </a>
+    <a routerLink="/trip-input" routerLinkActive="active" class="white-text right">
+      Trip Input
+    </a>
+  </div>
+</mat-toolbar>
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="page-footer deep-purple  darken-2 " style="margin-top: 20px;" >
+  <div class="footer-copyright">
+    <div class="container ">
+      © 2019 Copyright I-Vuckovic, U-Zivkovic
+    </div>
+  </div>
+</footer>

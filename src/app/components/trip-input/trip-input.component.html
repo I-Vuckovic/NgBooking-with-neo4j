@@ -1,0 +1,47 @@
+<div class="container" style="margin-top: 30px;">
+
+  <mat-form-field>
+    <mat-label>From</mat-label>
+    <mat-select
+      [(ngModel)]="trip.from"
+     
+    >
+      <mat-option>None</mat-option>
+      <mat-option
+        *ngFor="let destination of Destinations$ | async"
+        [value]="destination"
+      >
+        {{ destination }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>To</mat-label>
+    <mat-select
+      [(ngModel)]="trip.to"
+     
+    >
+      <mat-option>None</mat-option>
+      <mat-option
+        *ngFor="let destination of Destinations$ | async"
+        [value]="destination"
+      >
+        {{ destination }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+ 
+  <form >
+    
+    <input placeholder="Departure" required type="datetime-local" [(ngModel)]="trip.time" name="departure"/>
+    <input placeholder="Distance" required type="number" [(ngModel)]="trip.distance" name="distance"/>
+    <input placeholder="Duration" required type="text" [(ngModel)]="trip.duration" name="duration"/>
+    <input placeholder="Price" required type="number" [(ngModel)]="trip.price" name="price"/>
+    <input placeholder="Seats Left" required type="number" [(ngModel)]="trip.freeSeats" name="freeSeats"/>
+    <input placeholder="Extra luggage" required type="number" [(ngModel)]="trip.extraLuggage" name="extraLuggage"/>
+    <div>
+      <button mat-button (click)="addNewTrip()">Make new Trip</button>
+    </div>
+  </form> 
+</div>

@@ -1,0 +1,74 @@
+<app-search-bar></app-search-bar>
+<div class="container" style="margin-top: 20px;">
+  <mat-table [dataSource]="trips" class="mat-elevation-z8">
+    <ng-container matColumnDef="From">
+      <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.from }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="To">
+      <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.to }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Time">
+      <mat-header-cell *matHeaderCellDef> Departure </mat-header-cell>
+      <mat-cell *matCellDef="let trip">
+        {{ trip.time | date: "medium" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Distance">
+      <mat-header-cell *matHeaderCellDef> Distance </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.distance }}km </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Duration">
+      <mat-header-cell *matHeaderCellDef> Duration </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.duration }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.price }}  <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        style="font-size: 15px;"
+        >euro_symbol</mat-icon
+      > </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="FreeSeats">
+      <mat-header-cell *matHeaderCellDef> Seats left </mat-header-cell>
+      <mat-cell *matCellDef="let trip"> {{ trip.freeSeats }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Reserve">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let trip">
+        <a routerLink="/payment/{{trip.id}}" routerLinkActive="active">
+          <button
+            *ngIf="processingTripId !== trip.id && !trip.seatReserved"
+            mat-raised-button
+            color="accent"
+            [disabled]="trip.freeSeats === 0"
+          >
+            Reserve a seat
+          </button>
+        </a>
+        <button
+          mat-raised-button
+          *ngIf="processingTripId === trip.id && !trip.seatReserved"
+        >
+          <mat-spinner [diameter]="40"></mat-spinner>
+        </button>
+        <button mat-raised-button *ngIf="trip.seatReserved" class="green">
+          Reserved
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

@@ -1,0 +1,33 @@
+<div class="container" style="margin-top: 20px;">
+  <div class="flex">
+    <mat-form-field>
+      <input
+        matInput
+        class="browser-default"
+        placeholder="Reservation ID"
+        type="text"
+        [(ngModel)]="reservationId"
+        [formControl]="idFormControl"
+      />
+      <mat-error *ngIf="idFormControl.hasError('required')">
+        Please enter an ID
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="searchForReservaton()">
+      Search for reservation
+    </button>
+  </div>
+
+  <div class="info-container">
+    <mat-spinner *ngIf="fetchingReservation"></mat-spinner>
+
+    <div *ngIf="!fetchingReservation && fetchingReservationFail" class="failed-fetch red lighten-3">
+      <p>Error: Could not find reservation with selected ID</p>
+    </div>
+
+    <app-reservation-info [reservation]="reservation"
+      *ngIf="fetchingReservationSucess && !fetchingReservation"
+    ></app-reservation-info>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="container" style="margin-top: 20px;">
+  <div class="form-container">
+    <mat-form-field>
+      <mat-label>From</mat-label>
+      <mat-select
+        [(ngModel)]="selectedFrom"
+        (ngModelChange)="changeFromDestination()"
+      >
+        <mat-option>None</mat-option>
+        <mat-option
+          *ngFor="let destination of fromDestinations$ | async"
+          [value]="destination"
+        >
+          {{ destination }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To</mat-label>
+      <mat-select
+        [(ngModel)]="selectedTo"
+        (ngModelChange)="changeToDestination()"
+      >
+        <mat-option>None</mat-option>
+        <mat-option
+          *ngFor="let destination of toDestinations$ | async"
+          [value]="destination"
+        >
+          {{ destination }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field > 
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Earliest departue"
+        class="browser-default"
+        required (dateChange)="onStartDateChange()"
+        [(ngModel)]="selectedStartDate"
+        type="text"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="month" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        placeholder="Latest departure"
+        class="browser-default"
+        [(ngModel)]="selectedEndDate"
+        required (dateChange)="onEndDateChange()"
+        type="text"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1 startView="month" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+    <a routerLink="/trip-list" routerLinkActive="active">
+      <button mat-raised-button color="primary">
+        Search
+      </button>
+    </a>
+  </div>
+</div>
