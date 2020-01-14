@@ -91,6 +91,12 @@ export class TripService {
         return this.neo4j.run(query);
     }
 
+    addNewDestination(newDestination : string) {
+        let query = `CREATE (c:City {name: '${newDestination}'})`
+
+        this.neo4j.run(query);
+    }
+
     getTripById(id: number) {
         
         let query = 

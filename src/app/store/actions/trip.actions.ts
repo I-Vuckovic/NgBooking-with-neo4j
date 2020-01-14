@@ -7,10 +7,8 @@ export const FETCH_TRIPS_FAIL = '[TRIP] Fetch trips failed';
 export const FETCH_TRIPS_SUCCESS = '[TRIP] Fetch trips sucess';
 export const FETCH_TRIP_BY_ID = '[TRIP] Fetch trip by id';
 export const TRIP_BY_ID_RECIEVED = '[TRIP] Trip by id recieved';
-/// MOZDA NE TREBAJU
 export const FETCH_RESERVED_TRIP = '[TRIP] Fetch reserved trip';
 export const RESERVED_TRIP_RECIEVED = '[TRIP] Reserved trip recieved'
-///
 export const UPDATE_FREE_SEATS = '[TRIP] Update free seats'
 export const FETCH_ALL_DESTINATIONS = '[TRIP] Fetch all destinations'
 export const DESTINATIONS_RECIEVED = '[TRIP] Destinations recieved'
@@ -20,6 +18,7 @@ export const FETCH_TO_DESTINATIONS = '[TRIP] Fetch to destinations'
 export const TO_DESTINATIONS_RECIEVED = '[TRIP] To destinations recieved'
 export const ADD_TRIP = '[TRIP] Add new trip'
 export const ADD_TRIP_SUCCESS = '[TRIP] Add new trip sucess'
+export const ADD_NEW_DESTINATION = '[TRIP] Add new destination';
 
 export class FetchTrips implements Action{
     readonly type = FETCH_TRIPS;
@@ -100,6 +99,11 @@ export class AddTripSucess implements Action {
     
 }
 
+export class AddNewDestination implements Action {
+    readonly type = ADD_NEW_DESTINATION;
+    constructor(public newDestination: string) {}
+}
+
 export type TripActions = FetchTrips | FetchTripsFail | FetchTripsSucess | UpdateFreeSeats | FetchAllDestinations 
                             | DestinationsRecieved 
                             | AddTrip
@@ -111,4 +115,4 @@ export type TripActions = FetchTrips | FetchTripsFail | FetchTripsSucess | Updat
                             | FetchTripById
                             | TripByIdRecieved
                             | FetchReservedTrip
-                            | ReservedTripRecieved;
+                            | ReservedTripRecieved | AddNewDestination;

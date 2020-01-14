@@ -141,4 +141,10 @@ export class TripEffects {
             }))
             
     )
+
+    @Effect({dispatch: false})
+    addNewDestination$ = this.actions$.pipe(
+        ofType(tripActions.ADD_NEW_DESTINATION),
+        map((action : tripActions.AddNewDestination) => this.tripService.addNewDestination(action.newDestination))
+    )
 }
