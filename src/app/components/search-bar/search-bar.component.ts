@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as fromStore from '../../store';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import * as moment from 'moment'
+import { Filter } from 'src/app/models/filter.model';
 
 @Component({
   selector: 'app-search-bar',
@@ -28,7 +30,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       this.selectedTo = res.to;
       this.selectedEndDate = res.endDate;
       this.selectedStartDate = res.startDate;
+
+
+      //Dosta redudantnog koda zbog prebacivanja sa prvobitnog firebase/angular pristupa na neo4j
+      // this.filterState.to = res.to;
+      // this.filterState.from = res.from;
+      // this.filterState.startDate = res.startDate;
+      // this.filterState.endDate = res.endDate;
     })
+
 
     this.store.dispatch(new fromStore.FetchFromDestinations(''));
     this.store.dispatch(new fromStore.FetchToDestinations(''));
@@ -36,6 +46,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
     this.toDestinations$ = this.store.select(fromStore.getToDestinations);
     this.fromDestinations$ = this.store.select(fromStore.getFromDestinations);
+  }
+
+  clearFilter() {
+    this.store.dispatch(new fromStore.ResetFilter())
+    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo, this.selectedStartDate, this.selectedEndDate))
+
   }
 
   ngOnDestroy(): void {
@@ -49,7 +65,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
     this.store.dispatch(new fromStore.FetchFromDestinations(this.selectedTo));
     this.store.dispatch(new fromStore.ChangeToDestination(this.selectedTo));
-    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo))
+    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo, this.selectedStartDate, this.selectedEndDate))
   }
 
   changeFromDestination() {
@@ -58,16 +74,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
     this.store.dispatch(new fromStore.FetchToDestinations(this.selectedFrom));
     this.store.dispatch(new fromStore.ChangeFromDestination(this.selectedFrom));
-    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo))
+    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo, this.selectedStartDate, this.selectedEndDate))
 
   }
 
   onStartDateChange(){
+   
     this.store.dispatch(new fromStore.ChangeStartDate(this.selectedStartDate));
+    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo, this.selectedStartDate, this.selectedEndDate))
+
+
   }
 
   onEndDateChange(){
     this.store.dispatch(new fromStore.ChangeEndDate(this.selectedEndDate));
+    this.store.dispatch(new fromStore.FetchTrips(this.selectedFrom, this.selectedTo, this.selectedStartDate, this.selectedEndDate))
+
+
   }
 
 }

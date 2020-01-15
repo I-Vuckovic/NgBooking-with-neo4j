@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Reservation } from '../models/reservation.model';
 import {AngularNeo4jService} from 'angular-neo4j';
 import {credentials} from "../../environments/neo4j";
+import { Filter } from '../models/filter.model';
 
 
 @Injectable({
@@ -60,15 +61,17 @@ export class TripService {
         })
     }
 
-    getTrips(fromDestination: string, toDestination: string) {
+    getTrips(fromDestination: string, toDestination: string, startDate: Date, endDate: Date) {
 
-
+    
         let from = fromDestination == '' ? '' : `{name : "${fromDestination}"}`
         let to = toDestination == '' ? '' : `{name : "${toDestination}"}`
 
         let query = 
         `MATCH (t)-[:GOES_FROM]->(f:City ${from})
         MATCH (t)-[:GOES_TO]->(g:City ${to})
+        WHERE t.time <= datetime({year:${endDate.getFullYear()}, month:${endDate.getMonth()+1}, day:${endDate.getDate()}})
+        AND t.time >= datetime({year:${startDate.getFullYear()}, month:${startDate.getMonth()+1}, day:${startDate.getDate()}})
         WITH {id: ID(t), from: f.name, to: g.name, price: t.price, 
             freeSeats: t.freeSeats, extraLuggage: t.extraLuggage,
              distance: t.distance, duration: t.duration, time: t.time} as Trip
@@ -83,7 +86,9 @@ export class TripService {
         
         let query = `
             CREATE (r:Trip {distance: ${trip.distance}, price: ${trip.price}, duration: "${trip.duration}", 
-            freeSeats: ${trip.freeSeats}, extraLuggage: ${trip.extraLuggage}, time: datetime("${trip.time}")})
+            freeSeats: ${trip.freeSeats}, extraLuggage: ${trip.extraLuggage}, 
+            time: datetime({ year:${trip.time.getFullYear()}, month:${trip.time.getMonth()+1}, day:${trip.time.getDate()}, 
+            hour:${trip.time.getHours()}, minute:${trip.time.getMinutes()} })})
             MERGE (f:City {name: "${trip.from}"})
             MERGE (t:City {name: "${trip.to}"})
             CREATE (r)-[:GOES_TO]->(t)

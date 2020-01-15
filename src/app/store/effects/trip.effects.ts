@@ -94,11 +94,12 @@ export class TripEffects {
     @Effect()
     loadTrips$ = this.actions$.pipe(
         ofType(tripActions.FETCH_TRIPS),
-        switchMap((action : tripActions.FetchTrips) =>
-            this.tripService
-                .getTrips(action.fromDestination, action.toDestination)
+        switchMap((action : tripActions.FetchTrips) => 
+            {
+                return this.tripService
+                .getTrips(action.fromDestionation, action.toDestination, action.startDate, action.endDate)
                 .then( res => { 
-                    return new tripActions.FetchTripsSucess(this.extractTrips(res))})
+                    return new tripActions.FetchTripsSucess(this.extractTrips(res))})}
         )
     )
 

@@ -19,6 +19,7 @@ export class TripInputComponent implements OnInit {
   private errorText: string;
   private trip: Trip;
   private newDestination: string;
+  private selectedDate: Date;
 
 
   constructor(private store: Store<fromStore.AppState>) { }
@@ -51,16 +52,19 @@ export class TripInputComponent implements OnInit {
 
   addNewTrip(){
 
+  
+
     if (this.trip.from === this.trip.to) {
       this.error = true; this.errorText = 'Unete su dve iste destinacije'; return;
     }
 
     if (this.trip.from ==='' || this.trip.to === '' || this.trip.freeSeats === null ||
         this.trip.price === null || this.trip.distance === null || this.trip.extraLuggage === null ||
-        this.trip.duration === '' || this.trip.time === new Date(0))
+        this.trip.duration === '' || this.selectedDate === undefined)
         {
           this.error = true; this.errorText = 'Nisu uneti svi podaci'; return;
         }
+        this.trip.time = new Date(this.selectedDate);
 
     this.error = false;
     this.store.dispatch(new fromStore.AddTrip(this.trip))

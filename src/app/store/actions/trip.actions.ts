@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Trip } from '../../models/trip.model';
 import { Reservation } from 'src/app/models/reservation.model';
+import { Filter } from 'src/app/models/filter.model';
 
 export const FETCH_TRIPS = '[TRIP] Fetch trips';
 export const FETCH_TRIPS_FAIL = '[TRIP] Fetch trips failed';
@@ -22,7 +23,8 @@ export const ADD_NEW_DESTINATION = '[TRIP] Add new destination';
 
 export class FetchTrips implements Action{
     readonly type = FETCH_TRIPS;
-    constructor(public fromDestination: string, public toDestination: string) {}
+    constructor(public fromDestionation: string, public toDestination: string,
+                public startDate: Date, public endDate: Date) {}
 }
 
 export class FetchTripsFail implements Action{

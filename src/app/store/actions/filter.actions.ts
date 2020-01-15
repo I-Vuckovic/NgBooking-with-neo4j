@@ -4,6 +4,7 @@ export const CHANGE_FROM_DESTINATION = '[FILTER] Change from destinatino';
 export const CHANGE_TO_DESTINATION = '[FILTER] Change to destinatino';
 export const CHANGE_START_DATE = '[FILTER] Change start date';
 export const CHANGE_END_DATE = '[FILTER] Change end date';
+export const RESET_FILTER = '[FILTER] Reset filter'
 
 export class ChangeFromDestination implements Action{
     readonly type = CHANGE_FROM_DESTINATION;
@@ -25,4 +26,8 @@ export class ChangeStartDate implements Action{
     constructor(public payload: Date){}
 }
 
-export type FilterActions = ChangeFromDestination | ChangeToDestination | ChangeEndDate | ChangeStartDate;
+export class ResetFilter implements Action {
+    readonly type = RESET_FILTER;
+}
+
+export type FilterActions = ChangeFromDestination | ChangeToDestination | ChangeEndDate | ChangeStartDate | ResetFilter;

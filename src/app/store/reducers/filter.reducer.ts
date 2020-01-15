@@ -13,7 +13,7 @@ const intitialState: FilterState = {
     to: '',
     from: '',
     startDate: new Date(0),
-    endDate: new Date(2025, 0, 0, 0, 0, 0, 0),
+    endDate: new Date(2030, 0, 0, 0, 0, 0, 0),
 }
 
 export function filterReducer(state: FilterState = intitialState, action: FilterActions.FilterActions): FilterState {
@@ -43,6 +43,9 @@ export function filterReducer(state: FilterState = intitialState, action: Filter
                 ...state,
                 endDate: action.payload
             }
+        
+        case FilterActions.RESET_FILTER:
+            return intitialState
 
         default:
             return state;
@@ -53,3 +56,4 @@ export const getFromDestination = (state: FilterState) => state.from;
 export const getToDestination = (state: FilterState) => state.to;
 export const getStartDate = (state: FilterState) => state.startDate;
 export const getEndDate = (state: FilterState) => state.endDate;
+export const getFilterState = (state: FilterState) => state;

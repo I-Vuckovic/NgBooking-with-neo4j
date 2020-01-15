@@ -20,6 +20,8 @@ export class TripListComponent implements OnInit, OnDestroy {
   private filterSubscription: Subscription;
   private fromDestination: string;
   private toDestination: string;
+  private startDate: Date;
+  private endDate: Date;
 
   constructor(private store: Store<fromStore.AppState>, private snackBar: MatSnackBar) { }
 
@@ -28,10 +30,12 @@ export class TripListComponent implements OnInit, OnDestroy {
     this.filterSubscription = this.store.select(fromStore.selectFilterState).subscribe(res => {
       this.fromDestination = res.from;
       this.toDestination = res.to
+      this.startDate = res.startDate;
+      this.endDate = res.endDate
     })
 
 
-    this.store.dispatch(new fromStore.FetchTrips(this.fromDestination, this.toDestination));
+    this.store.dispatch(new fromStore.FetchTrips(this.fromDestination, this.toDestination, this.startDate, this.endDate));
 
     this.trips = this.store.select(fromStore.getAllTrips);
 

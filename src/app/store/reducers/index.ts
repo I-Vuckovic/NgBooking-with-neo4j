@@ -42,5 +42,6 @@ export const getFromFilter = createSelector(selectFilterState, fromFilter.getFro
 export const getToFilter = createSelector(selectFilterState, fromFilter.getToDestination);
 export const getStartDateFilter = createSelector(selectFilterState, fromFilter.getStartDate);
 export const getEndDateFilter = createSelector(selectFilterState, fromFilter.getEndDate);
+export const getFilterState = createSelector(selectFilterState, fromFilter.getFilterState);
 
 
