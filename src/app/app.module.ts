@@ -30,6 +30,7 @@ import { ReservationCodeComponent } from './components/reservation-code/reservat
 import { ReservationSearchComponent } from './components/reservation-search/reservation-search.component';
 import { ReservationInfoComponent } from './components/reservation-info/reservation-info.component';
 import { TripInputComponent } from './components/trip-input/trip-input.component';
+import { DialogTemplateComponent } from './components/dialog-template/dialog-template.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TripInputComponent } from './components/trip-input/trip-input.component
     ReservationCodeComponent,
     ReservationSearchComponent,
     ReservationInfoComponent,
-    TripInputComponent
+    TripInputComponent,
+    DialogTemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { TripInputComponent } from './components/trip-input/trip-input.component
     AngularFireStorageModule,
     AngularNeo4jModule
   ],
-  entryComponents: [ReservationCodeComponent],
+  entryComponents: [ReservationCodeComponent, DialogTemplateComponent],
   providers: [AngularFireDatabase],
   bootstrap: [AppComponent]
 })

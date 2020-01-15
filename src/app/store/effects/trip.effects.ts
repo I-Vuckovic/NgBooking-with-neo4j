@@ -12,6 +12,7 @@ import { MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
 import { PaymentComponent } from 'src/app/components/payment/payment.component';
 import { ReservationCodeComponent } from 'src/app/components/reservation-code/reservation-code.component';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { DialogTemplateComponent } from 'src/app/components/dialog-template/dialog-template.component';
 
 
 @Injectable()
@@ -45,7 +46,9 @@ export class TripEffects {
     addTrip$ = this.actions$.pipe(
         ofType(tripActions.ADD_TRIP),
         switchMap((action : tripActions.AddTrip) => 
-            this.tripService.addTrip(action.trip).then(() => new tripActions.AddTripSucess)
+            this.tripService.addTrip(action.trip).then(() =>{
+                this.dialog.open(DialogTemplateComponent, {data: `Sucesfully added new trip from ${action.trip.from} to ${action.trip.to}`})
+                return new tripActions.AddTripSucess})
         )
         
     )
@@ -146,6 +149,9 @@ export class TripEffects {
     @Effect({dispatch: false})
     addNewDestination$ = this.actions$.pipe(
         ofType(tripActions.ADD_NEW_DESTINATION),
-        map((action : tripActions.AddNewDestination) => this.tripService.addNewDestination(action.newDestination))
+        map((action : tripActions.AddNewDestination) => this.tripService.addNewDestination(action.newDestination).then( () => {
+            this.dialog.open(DialogTemplateComponent, {data: `Sucesfully added new destination "${action.newDestination}"`} )
+        })
+        .catch(err => console.log(err)))
     )
 }
