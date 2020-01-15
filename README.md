@@ -29,3 +29,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Instruction on how to set up neo4j
 
 The app itself is launched as a normal Angular app, the instructions are already given. Once the app is built in the folder `src/environments/neo4j.ts` there is a constant `credentials` where the neo4j credentiants are put. For the sake of this project as it is a college asignment it is hardcoded. 
+There is a dump file, which is named after the last date it has been updated, which should be imported into the neo4j server, there is also a graph.db folder which can be put directly into the neo4j directory but this is not recommended.
